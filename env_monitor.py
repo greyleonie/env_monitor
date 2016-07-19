@@ -19,7 +19,7 @@ ms_user = "sa"
 ms_password = "1qaz2wsx3edc4rfv.."
 
 # mobile phone list
-mobile = ("15918515785", "13682241959", "13620406845")
+mobile = ("15918515785", "13682241959", "13620406845", "13580345465", "18819821389", "13316036387", "13560218614", "13570396545", "13642704686", "15999962756")
 mobiles = "|".join(mobile)
 
 # set of event id, save the id of not renormal events.
