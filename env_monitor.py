@@ -14,7 +14,7 @@ pg_password = ""
 # mssql connection string
 ms_host = "192.168.0.202"
 ms_port = "1433"
-ms_database = "DXPlatform"
+ms_database = "dxtrainnew"
 ms_user = "sa"
 ms_password = "1qaz2wsx3edc4rfv.."
 
@@ -58,9 +58,12 @@ while True:
 
             # send alarm message
             if event_id not in event_id_set:
-                ms_cur.execute("select max(sendmsgid) from sendmsg")
+                ms_cur.execute("select code from EOS_UNIQUE_TABLE where name='SendMsg.sendmsgid'")
                 ms_rows = ms_cur.fetchone()
                 ms_id = ms_rows[0] + 1
+                sql = "update EOS_UNIQUE_TABLE set code=%d where name='SendMsg.sendmsgid'" % (ms_id)
+                ms_cur.execute(sql)
+                ms_conn.commit()
 
                 sql = "insert into SendMsg (SendMsgID,DestAddrIsdnNum,MsgFormat,MsgContent,AuthorID) values (%d, '%s', %d, '%s %s', '%s');"\
                     % (ms_id, mobiles, 1, row[1], row[2], 16346)
@@ -73,9 +76,12 @@ while True:
 
             # send renormal message
             if row[3] != None:
-                ms_cur.execute("select max(sendmsgid) from sendmsg")
+                ms_cur.execute("select code from EOS_UNIQUE_TABLE where name='SendMsg.sendmsgid'")
                 ms_rows = ms_cur.fetchone()
                 ms_id = ms_rows[0] + 1
+                sql = "update EOS_UNIQUE_TABLE set code=%d where name='SendMsg.sendmsgid'" % (ms_id)
+                ms_cur.execute(sql)
+                ms_conn.commit()
 
                 sql = "insert into SendMsg (SendMsgID,DestAddrIsdnNum,MsgFormat,MsgContent,AuthorID) values (%d, '%s', %d, '%s %s', '%s');"\
                     % (ms_id, mobiles, 1, row[3], row[4], 16346)
